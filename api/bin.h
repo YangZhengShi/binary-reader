@@ -1,18 +1,17 @@
 #ifndef MSAB_BIN_H
 #define MSAB_BIN_H
 
-#include <array>
-#include <fstream>
-#include <vector>
 #include "../util/Util.h"
 
-template <size_t N> class bin {
+template <size_t N,typename T> class bin {
 
-    virtual std::vector<std::array<char, N>> getFile(const std::string &) = 0;
+    static std::vector<std::array<char, N>> getFile(const std::string &fileName);
 
-    virtual void extractRecords(const std::vector<std::array<char,N>> &) = 0;
+    static void extractRecords(std::vector<T> *vector,const std::vector<std::array<char, N>> &data);
 
-    virtual void writeToTXT(const std::vector<std::vector<std::string>> &, const std::string&) = 0;
+    static void writeToTXT(const std::vector<T> &data, const std::string &fileName);
+
+    virtual void write(const T&, std::ostream *) = 0;
 
 };
 

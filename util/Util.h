@@ -7,7 +7,13 @@
 #include <cstddef>
 #include <array>
 
-#define BIN "binaries"
+#include "../util/copy.h"
+#define BINARIES "binaries"
+
+#define BIN ".bin"
+
+#define TXT ".txt"
+
 
 namespace util {
 
