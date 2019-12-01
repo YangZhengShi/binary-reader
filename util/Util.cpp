@@ -10,4 +10,15 @@ namespace util{
 
         return files;
     }
+
+    static int hexToInt(char ch){
+
+        if (ch >= '0' && ch <= '9') return ch - '0';
+
+        if (ch >= 'A' && ch <= 'F') return ch - 'A' + 10;
+
+        if (ch >= 'a' && ch <= 'f') return ch - 'a' + 10;
+
+        return -1;
+    }
 }

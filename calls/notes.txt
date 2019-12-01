@@ -1,13 +1,5 @@
-#ifndef MSAB_CALLS_H
-#define MSAB_CALLS_H
-
-#include <array>
-#include <fstream>
-#include <vector>
-#include "../API/bin.h"
-
-/**
- * seq nr(4)kind of call(8)      4    name(42)                                                                             phone nr (10)        duration(33)
+/**                                                                                                             
+ * seq nr(4)kind of call(8)      ?    name(42)                                                                             phone nr (10)        duration(33)
  * 65000000|FF00FFFF00000000|B9C41E4D|000000000000000000000000000000000000000000000000000000000000000000000000000000000000|31303038360000000000|000000000000000000000000000000000000000000000000000000000000000007|000100D978
  *         |Dialed          |        |unsaved                                                                             |10086               |                                                                 7|
  *         |not saved       |        |                                                                                    |                    |                                                                  |
@@ -34,20 +26,5 @@
  * 6C000000|0600050000000200|6ED04651|730069006D0020006E007200200031000000000000000000000000000000000000000000000000000000|30363336333600000000|000000000000000000000000000000000000000000000000000000000000000000|0001005EC3
  *         |Dialed          |        |sim nr 1                                                                            |063636              |                                                                  |
  *         |saved           |        |                                                                                    |                    |                                                                  |
- * SIZE OF A CHUNK == 106 BYTES
+ *this is the format of a record in the calls binary. I could not figure out the date format in order to extract it. The size of a record is 106 bytes.
  **/
-
-template <size_t N>class calls : public bin<N> {
-
-    std::vector<std::array<char,N>> getFile(const std::string &fileName) override;
-
-    std::vector<std::vector<std::string>> extractRecords(const std::vector<std::array<char, N>> &vector) override;
-
-    void writeToTXT(const std::vector<std::vector<std::string>> &vector) override;
-
-public:
-
-    explicit calls(const std::string &fileName);
-};
-
-#endif
