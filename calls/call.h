@@ -22,16 +22,29 @@ template<size_t N>class call{
 
     std::vector<call> records;
 
-    explicit call(const std::array<char,N> &);
-
-    static void write(const call &, std::ostream *);
-
 public:
 
-    explicit call(const std::string &fileName);
+    static void write(const call &call, std::ostream *out){
+        *out << "PHONE NUMBER: " << call.number << " TYPE OF CALL: " << call.type << call.name <<  std::endl;
+    }
 
-    ~call(){
-        free(&records);
+
+    explicit call(const std::array<char,N> &record){
+
+        this->name      = util::copy::name(record,util::constants::NAME_IN_CALLS_OFFSET);
+
+        this->type      = util::copy::type(record,util::constants::TYPE_OFFSET);
+
+        this->duration  = util::copy::duration(record,util::constants::DURATION_OFFSET);
+
+        this->number    = util::copy::number(record,util::constants::NUMBER_IN_CALLS_OFFSET);
+    }
+
+    explicit call(const std::string &fileName){
+
+        this->records=bin<N,call>::extractRecords(bin<N,call>::getFile(fileName));
+
+        bin<N,call>::writeToTXT(this->records,fileName);
     }
 };
 

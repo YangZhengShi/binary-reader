@@ -2,33 +2,25 @@
 #include "calls/call.h"
 #include "contacts/contact.h"
 
-/**
- * Please note that the modules are working exactly as described,
- * i faced an issue with the linker of gcc since it cannot "see" the implementation
- * of the constructors(the headers were probably not included in the compilation stage?
- * have faced similar issues with CLion before).
- *
- * results can be seen in the out directory.
- * */
+//run the executable as follows: ./msab pwd
 
-int main() {
+#define PRINT(X) std::cout<<(X) <<std::endl;
 
-    //hardcoded path for the binaries
-    auto calls = std::filesystem::current_path()/"binaries"/"Calls.bin";
+int main(int argc, char **argv) {
 
-    auto details = std::filesystem::current_path()/"binaries"/"Phonebook_Details.bin";
+    PRINT("MANDATORY ASSIGNMENT FOR MSAB BY KONSTANTINOS XYDEROS")
+    PRINT("READING BINARIES FROM: ")
 
-    auto main = std::filesystem::current_path()/"binaries"/"Phonebook_Main.bin";
+    PRINT("Started parsing Calls...")
+    call<util::constants::CALLS_RECORD_SIZE> call(std::string(argv[1]).append(util::constants::CALLS));
+    PRINT("Calls.txt saved on the same directory as the original binary")
 
-    //calling the constructor to start working on its tasks for every binary
-    call<util::constants::CALLS_RECORD_SIZE> call(calls);
+    PRINT("Started parsing Contacts")
+    contact<util::constants::PHONEBOOK_MAIN_SIZE,util::constants::PHONEBOOK_RECORD_SIZE>
+            contact(std::string(argv[1]).append(util::constants::MAIN),std::string(argv[1]).append(util::constants::DETAILS));
+    PRINT("Phonebook_Main.txt saved on the same directory as the original binary")
 
-    contact<util::constants::PHONEBOOK_MAIN_SIZE,util::constants::PHONEBOOK_RECORD_SIZE> contact(main,details);
-
-    //explicitly call destructor to assert freeing up of memory
-    call.~call();
-
-    contact.~contact();
+    PRINT("THANK YOU FOR YOUR TIME!!!")
 
     return 0;
 }

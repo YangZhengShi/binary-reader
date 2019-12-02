@@ -1,6 +1,7 @@
 #ifndef MSAB_BIN_H
 #define MSAB_BIN_H
 
+#include <iostream>
 #include "../util/util.h"
 /**
  * Basic API for extracting and storing the results of the manipulation of the binary files.
@@ -24,12 +25,58 @@ template <size_t N,class T> class bin {
 
 public:
 
-    static std::vector<std::array<char, N>> getFile(const std::string &);
+    static std::vector<std::array<char, N>> getFile(const std::string &fileName){
 
-    static void extractRecords(std::vector<T> *,const std::vector<std::array<char, N>> &);
+        std::ifstream in(fileName, std::ios::in|std::ios::binary);
 
-    static void writeToTXT(const std::vector<T> &data, const std::string &fileName);
+        std::vector<std::array<char,N>> result;
 
+        assert(in);
+
+        std::array<char,N> arr{};
+
+        char ch;
+
+        size_t counter = 0;
+
+        while(in.get(ch)){
+
+            if(counter == N){
+
+                result.emplace_back(arr);
+
+                counter = 0;
+            }
+            arr.at(counter++) = ch;
+        }
+
+        in.close();
+
+        return result;
+
+    }
+
+    static std::vector<T> extractRecords(const std::vector<std::array<char, N>> &data){
+
+        std::vector<T> result;
+
+        for(auto e: data) result.emplace_back(T(e));
+
+        return result;
+    }
+
+    static void writeToTXT(const std::vector<T> &data, const std::string &fileName){
+
+        std::string newName = fileName.substr(0,fileName.find('.'));
+
+        newName.append(util::constants::TXT);
+
+        std::ofstream out(newName);
+
+        for(const auto &e : data) T::write(e,&out);
+
+        out.close();
+    }
 };
 
 #endif
