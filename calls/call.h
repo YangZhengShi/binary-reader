@@ -3,7 +3,7 @@
 
 #include "../api/bin.h"
 
-template<size_t N, typename T>class call: bin<N,T> {
+template<size_t N>class call{
 
     std::string type;
 
@@ -17,7 +17,7 @@ template<size_t N, typename T>class call: bin<N,T> {
 
     explicit call(const std::array<char,N> &);
 
-    void write(const T &t, std::ostream *out) override;
+    static void write(const call &, std::ostream *);
 
 public:
 

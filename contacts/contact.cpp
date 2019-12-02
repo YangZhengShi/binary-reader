@@ -1,30 +1,30 @@
 #include "contact.h"
 
-template<size_t N,typename T> contact<N,T>::contact(const std::array<char, N> &main, const std::array<char, N> &details) {
+template<size_t N> contact<N>::contact(const std::array<char, N> &main, const std::array<char, N> &details) {
 
-    this->tel      = copy::number(main,constants::TEL_OFFSET);
+    this->tel      = util::copy::number(main,util::constants::TEL_OFFSET);
 
-    this->name     = copy::name(main,constants::NAME_IN_CONTACTS_OFFSET);
+    this->name     = util::copy::name(main,util::constants::NAME_IN_CONTACTS_OFFSET);
 
-    this->email    =copy::name(details,constants::MAIL_OFFSET);
+    this->email    =util::copy::name(details,util::constants::MAIL_OFFSET);
 
-    this->fax      =copy::number(details,constants::FAX_OFFSET);
+    this->fax      =util::copy::number(details,util::constants::FAX_OFFSET);
 
-    this->home     =copy::number(details,constants::HOME_OFFSET);
+    this->home     =util::copy::number(details,util::constants::HOME_OFFSET);
 
-    this->org      =copy::name(details,constants::ORG_OFFSET);
+    this->org      =util::copy::name(details,util::constants::ORG_OFFSET);
 
-    this->work     =copy::number(details,constants::WORK_OFFSET);
+    this->work     =util::copy::number(details,util::constants::WORK_OFFSET);
 }
 
-template<size_t N,typename T>contact<N,T>::contact(const std::string &fileName) {
+template<size_t N> contact<N>::contact(const std::string &main, const std::string &details) {
 
-    extractRecords(this->contacts,contact::getFile<N>(fileName));
+    bin<N,contact>::extractRecords(this->contacts,bin<N,contact>::getFile<N>(main));
 
-    writeToTXT(this->contacts,fileName);
+    bin<N,contact>::writeToTXT(this->contacts,main);
 }
 
-template<size_t N, typename T> void contact<N, T>::write(const T &contact, std::ostream *out) {
+template<size_t N> void contact<N>::write(const contact &contact, std::ostream *out) {
     *out <<"NAME OF CONTACT: " << contact.name
          << " HOME PHONE NUMBER: " << contact.home
          << " WORK PHONE NUMBER: " << contact.work

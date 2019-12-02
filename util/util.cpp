@@ -1,4 +1,4 @@
-#include "Util.h"
+#include "util.h"
 
 namespace util{
 
@@ -6,7 +6,8 @@ namespace util{
 
         std::vector<std::string> files;
 
-        for (const auto& entry : std::filesystem::directory_iterator(std::filesystem::current_path()/BINARIES)) files.emplace_back(std::filesystem::current_path()/BINARIES/entry.path().filename().string());
+        for (const auto& entry : std::filesystem::directory_iterator(std::filesystem::current_path()/util::constants::BINARIES))
+            files.emplace_back(std::filesystem::current_path()/util::constants::BINARIES/entry.path().filename().string());
 
         return files;
     }

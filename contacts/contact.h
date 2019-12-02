@@ -3,7 +3,7 @@
 
 #include "../api/bin.h"
 
-template<size_t N,typename T> class contact : bin<N,T> {
+template<size_t N> class contact {
 
     std::vector<contact> records;
 
@@ -25,11 +25,11 @@ template<size_t N,typename T> class contact : bin<N,T> {
 
     explicit contact(const std::array<char,N> &, const std::array<char,N> &);
 
-    void write(const T &, std::ostream *) override;
+    void write(const contact &, std::ostream *) override;
 
 public:
 
-    explicit contact(const std::string &);
+    explicit contact(const std::string &,const std::string &);
 
 };
 
