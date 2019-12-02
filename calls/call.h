@@ -22,6 +22,10 @@ template<size_t N>class call{
 public:
 
     explicit call(const std::string &fileName);
+
+    ~call(){
+        delete records;
+    }
 };
 
 #endif

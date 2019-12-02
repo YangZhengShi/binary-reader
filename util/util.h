@@ -58,20 +58,34 @@ namespace util {
 
         static const size_t HOME_OFFSET            = 0;
 
-        static const size_t WORK_OFFSET            = 146;
+        static const size_t WORK_OFFSET            = 145;
 
-        static const size_t FAX_OFFSET             = 188;
+        static const size_t FAX_OFFSET             = 187;
 
         static const size_t TEL_OFFSET             = 42;
 
-        static const size_t MAIL_OFFSET            = 85;
+        static const size_t MAIL_OFFSET            = 84;
 
         static const size_t NAME_IN_CONTACTS_OFFSET= 0;
 
-        static const size_t ORG_OFFSET             = 43;
+        static const size_t NAME_IN_CONTACTS_SIZE  = 15;
+
+        static const size_t NUMBER_IN_MAIN_OFFSET  = 42;
+
+        static const size_t ORG_SIZE               = 20;
+
+        static const size_t MAIL_SIZE              = 17;
+
+        static const size_t ORG_OFFSET             = 42;
     }
 
     namespace copy {
+
+        template<size_t N> static std::string deleted(const std::array<char,N> &record);
+
+        template<size_t N> static std::string eMail(const std::array<char,N> &record, size_t offset);
+
+        template<size_t N> static std::string company(const std::array<char,N> &record, size_t offset);
 
         template<size_t N> static std::string type(const std::array<char,N> &record,size_t offset);
 
@@ -83,9 +97,23 @@ namespace util {
 
     }
 
+
+    //could be used to dynamically find all the possible files that should be used in the correct directory
     static std::vector<std::string> getFiles();
 
     static int hexToInt(char ch);
+
+    static inline bool isLetter(char ch){
+        return (ch>=65 && ch <= 90) || (ch>= 97 && ch <=122);
+    }
+
+    static inline bool isNumber(char ch){
+        return ch >=48 && ch <57;
+    }
+
+    static inline bool isEmail(char ch){
+        return (ch >= 48 && ch <=57) ||(ch>=65 && ch <= 90) || (ch>= 97 && ch <=122)|| ch == static_cast<char>(0x2e) || ch== static_cast<char>(40);
+    }
 }
 
 #endif

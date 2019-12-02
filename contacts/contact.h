@@ -3,9 +3,13 @@
 
 #include "../api/bin.h"
 
-template<size_t N> class contact {
+template<size_t N,size_t M> class contact {
 
-    std::vector<contact> records;
+    std::vector<contact> main;
+
+    std::vector<contact> details;
+
+    std::vector<contact> final;
 
     std::string name;
 
@@ -23,13 +27,24 @@ template<size_t N> class contact {
 
     std::string deleted;
 
-    explicit contact(const std::array<char,N> &, const std::array<char,N> &);
+    //merge the 2 different contacts created on main and details(since they are added on the same index it is enough to create a final contact to be added on main vector)
+    contact(const contact &,const contact &);
 
-    void write(const contact &, std::ostream *) override;
+    //create a contact based on the raw records received from both the binary files
+    explicit contact(const std::array<char,N> &, const std::array<char,M> &);
+
+    //Write the final contact to the specific output stream
+    void write(const contact &, std::ostream *);
 
 public:
 
+    //public constuctor for creating the contacts
     explicit contact(const std::string &,const std::string &);
+    ~contact(){
+        free(this->main);
+        free(this->details);
+        free(this->final);
+    };
 
 };
 
