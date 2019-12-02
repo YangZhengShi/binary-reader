@@ -41,9 +41,9 @@ public:
     //public constuctor for creating the contacts
     explicit contact(const std::string &,const std::string &);
     ~contact(){
-        free(this->main);
-        free(this->details);
-        free(this->final);
+        free(&main);
+        free(&details);
+        free(&final);
     };
 
 };

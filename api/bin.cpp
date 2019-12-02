@@ -30,9 +30,9 @@ template<size_t N, class T>std::vector<std::array<char, N>> bin<N, T>::getFile(c
     return result;
 }
 
-template<size_t N, class T> void bin<N, T>::extractRecords(std::vector<T> *vector, const std::vector<std::array<char, N>> &data,const std::vector<std::array<char, N>> &details) {
+template<size_t N, class T> void bin<N, T>::extractRecords(std::vector<T> *vector, const std::vector<std::array<char, N>> &data) {
 
-    if (details == nullptr) for(auto e: data) vector->emplace_back(T(e));
+    for(auto e: data) vector->emplace_back(T(e));
 }
 
 template<size_t N, class T> void bin<N, T>::writeToTXT(const std::vector<T> &data, const std::string &fileName){

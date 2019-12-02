@@ -7,6 +7,37 @@
 #include <cstddef>
 #include <array>
 
+/**
+ * Utility functions for the module.
+ *
+ * Since there are parts on the records that are not recognisable by text, i hard coded some sequences
+ * that i made sense of wat they would mean.
+ *
+ * For example the DIALED_NOT_SAVED array of chars corresponds to dialed but the number is not saved
+ * (used the pictures provided for the assignment in order to know which record is what so i could make the codes).
+ *
+ * The sizes of every part of the record are hardcoded and evaluated on compile time since array allocation
+ * and templates need to know the number on compile time(static data structures).
+ *
+ * Offsets are calculated based on the observation of the records(see different classes with their notes.txt).
+ *
+ * the copy namespace plays a vital role on the code since it is actually using these values and extracting the data
+ * from chars to the string fields on every class.
+ *
+ * email is being cleaned as well since it can detect where there are extra characters that should not be there
+ * (based on the results)
+ *
+ * duration on every call is represented as a hex number on the record so a function hextoint was made to help
+ * the situation.
+ *
+ * getfiles is an extra function for further automation since it could read the files on the directory
+ * where the binaries are stored.
+ *
+ * one idea to improve the solution was to automate the process of finding the record size based on the most frequent
+ * character but would not work since there were some "corrupted" chars on the binary and would not gie clear results back.
+ *
+ *
+ * */
 namespace util {
 
     namespace constants{
@@ -101,6 +132,7 @@ namespace util {
     //could be used to dynamically find all the possible files that should be used in the correct directory
     static std::vector<std::string> getFiles();
 
+    //used to extract the duration of the call for the calls record
     static int hexToInt(char ch);
 
     static inline bool isLetter(char ch){
